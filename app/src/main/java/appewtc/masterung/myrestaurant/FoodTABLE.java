@@ -2,6 +2,7 @@ package appewtc.masterung.myrestaurant;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -22,6 +23,30 @@ public class FoodTABLE {
         writeDatabase = objMyOpenHelper.getWritableDatabase();
         readDatabase = objMyOpenHelper.getReadableDatabase();
     }   // Constructor
+
+    //Read All Data
+    public String[] readAllFood() {
+
+        String strFood[] = null;
+
+        Cursor objCursor = readDatabase.query(TABLE_FOOD,
+                new String[]{COLUMN_ID_FOOD, COLUMN_FOOD},
+                null, null, null, null, null);
+
+        if (objCursor != null) {
+            objCursor.moveToFirst();
+            strFood = new String[objCursor.getCount()];
+            for (int i = 0; i < objCursor.getCount(); i++) {
+                strFood[i] = objCursor.getString(objCursor.getColumnIndex(COLUMN_FOOD));
+                objCursor.moveToNext();
+            }
+
+        }
+
+        objCursor.close();
+
+        return strFood;
+    }
 
     public long addFood(String strFood, String strPrice) {
 
