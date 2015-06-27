@@ -11,14 +11,14 @@ import android.widget.TextView;
 /**
  * Created by masterUNG on 6/26/15 AD.
  */
-public class MyAdapter extends BaseAdapter{
+public class MyAdapter extends BaseAdapter {
 
     //Explicit
     private Context objContext;
     private String[] foodStrings, priceStrings;
     private int[] foodInts;
 
-    public MyAdapter(Context objContext, int[] foodInts, String[] priceStrings, String[] foodStrings) {
+    public MyAdapter(Context objContext, String[] foodStrings, String[] priceStrings, int[] foodInts) {
         this.objContext = objContext;
         this.foodInts = foodInts;
         this.priceStrings = priceStrings;

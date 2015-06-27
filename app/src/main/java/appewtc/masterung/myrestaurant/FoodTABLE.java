@@ -24,11 +24,30 @@ public class FoodTABLE {
         readDatabase = objMyOpenHelper.getReadableDatabase();
     }   // Constructor
 
-    //Read All Data
+    //Read All Price
+    public String[] readAllPrice() {
+
+        String strPrice[] = null;
+        Cursor objCursor = readDatabase.query(TABLE_FOOD,
+                new String[]{COLUMN_ID_FOOD, COLUMN_PRICE},
+                null, null, null, null, null);
+
+        if (objCursor != null) {
+            objCursor.moveToFirst();
+            strPrice = new String[objCursor.getCount()];
+            for (int i = 0; i < objCursor.getCount(); i++) {
+                strPrice[i] = objCursor.getString(objCursor.getColumnIndex(COLUMN_PRICE));
+                objCursor.moveToNext();
+            }   //for
+        } //if
+        objCursor.close();
+        return strPrice;
+    }   // readAllPrice
+
+    //Read All Food
     public String[] readAllFood() {
 
         String strFood[] = null;
-
         Cursor objCursor = readDatabase.query(TABLE_FOOD,
                 new String[]{COLUMN_ID_FOOD, COLUMN_FOOD},
                 null, null, null, null, null);
@@ -39,14 +58,11 @@ public class FoodTABLE {
             for (int i = 0; i < objCursor.getCount(); i++) {
                 strFood[i] = objCursor.getString(objCursor.getColumnIndex(COLUMN_FOOD));
                 objCursor.moveToNext();
-            }
-
-        }
-
+            }   //for
+        }   //if
         objCursor.close();
-
         return strFood;
-    }
+    }   //readAllFood
 
     public long addFood(String strFood, String strPrice) {
 
@@ -55,6 +71,6 @@ public class FoodTABLE {
         objContentValues.put(COLUMN_PRICE, strPrice);
 
         return writeDatabase.insert(TABLE_FOOD, null, objContentValues);
-    }
+    }   // addFood
 
 }   // Main Class
